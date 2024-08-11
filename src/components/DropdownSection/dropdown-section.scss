@@ -3,6 +3,7 @@
   border-radius: 10px;
   border: 2px solid lightgray;
   // box-shadow: 2px 2px 5px lightgray;
+  height: auto;
 }
 
 .dropdown-header {
@@ -12,7 +13,9 @@
   display: grid;
   grid-template-columns: 1fr 30px;
   grid-template-rows: 30px;
-  
+}
+
+.collapsable-container {
   &:hover {
     cursor: pointer;
   }
