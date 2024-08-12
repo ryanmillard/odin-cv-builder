@@ -7,7 +7,7 @@ import { mdiMenuDown, mdiMenuUp } from '@mdi/js';
 
 import DropdownForm from '../DropdownForm/dropdown-form.jsx';
 
-function DropdownSection({name, icon, isCollapsable=true, formItems}) {
+function DropdownSection({name, icon, isCollapsable=true, form, valueChanged}) {
   const [isCollapsed, setCollapsed] = useState(true);
 
   function menuClicked() {
@@ -26,7 +26,7 @@ function DropdownSection({name, icon, isCollapsable=true, formItems}) {
         }
       </div>
       {(!isCollapsed || !isCollapsable) &&
-        <DropdownForm formItems={formItems}/>
+        <DropdownForm form={form} valueChanged={valueChanged}/>
       }
     </div>
   );
