@@ -3,6 +3,7 @@ import { useState } from 'react';
 // import viteLogo from '/vite.svg';
 import './styles/main.scss';
 import DropdownSection from './components/DropdownSection/dropdown-section.jsx';
+import CVPreview from './components/CVPreview/cv-preview.jsx';
 
 import { mdiAccountTie, mdiSchool, mdiBriefcase } from '@mdi/js';
 
@@ -60,27 +61,27 @@ function App() {
 
   return (
     <>
-      <div className="cv-details-input">
-        <DropdownSection
-          name="Personal Details"
-          icon={mdiAccountTie}
-          isCollapsable={false}
-          form={templateData[0]}
-          valueChanged={itemValueChanged}
-        />
-        {/* <DropdownSection
-          name="Education"
-          icon={mdiSchool}
-        />
-        <DropdownSection
-          name="Experience"
-          icon={mdiBriefcase}
-        /> */}
-      </div>
-      <div>
-        {CVData[0].items.map(item => {
-          return <div>{item.name}: {item.value}</div>
-        })}
+      <div className="app-layout">
+        <div className="cv-details-input">
+          <DropdownSection
+            name="Personal Details"
+            icon={mdiAccountTie}
+            isCollapsable={false}
+            form={templateData[0]}
+            valueChanged={itemValueChanged}
+          />
+          {/* <DropdownSection
+            name="Education"
+            icon={mdiSchool}
+          />
+          <DropdownSection
+            name="Experience"
+            icon={mdiBriefcase}
+          /> */}
+        </div>
+        <div className="cv-wrapper">
+          <CVPreview CVData={CVData}/>
+        </div>
       </div>
     </>
   )
