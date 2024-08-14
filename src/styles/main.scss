@@ -1,17 +1,31 @@
-body {
-  margin: 0;
+:root {
+  --main-colour: rgb(74,74,74);
+  --accent-colour: rgb(87,109,123);
 }
 
-.app-layout {
+body {
+  margin: 0;
+  background-color: rgb(43,43,43);
+}
+
+.app-wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-container {
   height: 100vh;
   width: 100vw;
   // overflow: hidden;
 
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 350px 1fr;
   grid-template-rows: 100vh;
-
-  background-color: blue;
+  // background-color: blue;
+  max-width: 1000px;
 }
 
 .cv-details-input {
@@ -20,12 +34,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 10px;
+  // background-color: red;
 }
 
 .cv-wrapper {
-  background-color: purple;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgb(56,56,56);
 }

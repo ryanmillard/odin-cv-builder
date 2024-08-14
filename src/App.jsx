@@ -4,6 +4,7 @@ import { useState } from 'react';
 import './styles/main.scss';
 import DropdownSection from './components/DropdownSection/dropdown-section.jsx';
 import CVPreview from './components/CVPreview/cv-preview.jsx';
+import AccentColourPicker from './components/AccentColourPicker/accent-picker.jsx';
 
 import { mdiAccountTie, mdiSchool, mdiBriefcase } from '@mdi/js';
 
@@ -60,8 +61,8 @@ function App() {
   }
 
   return (
-    <>
-      <div className="app-layout">
+    <div className="app-wrapper">
+      <div className="app-container">
         <div className="cv-details-input">
           <DropdownSection
             name="Personal Details"
@@ -70,6 +71,7 @@ function App() {
             form={templateData[0]}
             valueChanged={itemValueChanged}
           />
+          <AccentColourPicker/>
           {/* <DropdownSection
             name="Education"
             icon={mdiSchool}
@@ -83,7 +85,7 @@ function App() {
           <CVPreview CVData={CVData}/>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

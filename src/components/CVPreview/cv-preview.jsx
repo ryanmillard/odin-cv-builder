@@ -34,9 +34,12 @@ function CVPreview({ CVData }) {
       transform: `scale(${scale})`,
       transformOrigin: `center center`
     }}>
+      <div className="cv-header">
+        {CVData[0].items[0].value}
       {CVData[0].items.map(item => {
         return <div>{item.name}: {item.value}</div>
       })}
+      </div>
     </div> 
   )
 }
