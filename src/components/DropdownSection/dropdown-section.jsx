@@ -15,6 +15,10 @@ function DropdownSection({name, icon, isCollapsable=true, form, valueChanged}) {
     setCollapsed(!isCollapsed);
   }
 
+  function resetBtnClicked() {
+    
+  }
+
   return (
     <div className={"dropdown-container " + (isCollapsable ? 'collapsable-container' : '')}>
       <div className="dropdown-header" onClick={menuClicked}>

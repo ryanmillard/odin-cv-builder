@@ -27,7 +27,7 @@ function CVPreview({ CVData }) {
 
     // If element gets deleted then remove event listener
     return () => { window.removeEventListener("resize", scalePreview); }
-  });
+  },[]);
 
   return (
     <div className='cv-container' ref={containerReference} style={{

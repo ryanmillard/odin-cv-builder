@@ -42,8 +42,6 @@ const templateData = [
 
 function App() {
   const [CVData, setCVData] = useState(templateData);
-  
-  console.log(CVData);
 
   function itemValueChanged(formName, formItemName, newValue) {
     setCVData(prevState => {
