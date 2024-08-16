@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Children, useState, useCallback } from "react";
 
 import './dropdown-section.scss';
 
@@ -7,7 +7,7 @@ import { mdiMenuDown, mdiMenuUp } from '@mdi/js';
 
 import DropdownForm from '../DropdownForm/dropdown-form.jsx';
 
-function DropdownSection({name, icon, isCollapsable=true, form, valueChanged}) {
+function DropdownSection({name, icon, isCollapsable=true, children}) {
   const [isCollapsed, setCollapsed] = useState(true);
 
   function menuClicked() {
@@ -15,13 +15,9 @@ function DropdownSection({name, icon, isCollapsable=true, form, valueChanged}) {
     setCollapsed(!isCollapsed);
   }
 
-  function resetBtnClicked() {
-    
-  }
-
   return (
-    <div className={"dropdown-container " + (isCollapsable ? 'collapsable-container' : '')}>
-      <div className="dropdown-header" onClick={menuClicked}>
+    <div className={"dropdown-container"}>
+      <div className={"dropdown-header " + (isCollapsable ? 'clickable-header' : '')} onClick={menuClicked}>
         <span className='dropdown-name'><Icon path={icon} size={'30px'}/> {name}</span>
         {isCollapsable &&
           <Icon className="dropdown-menu-icon" path={
@@ -30,7 +26,9 @@ function DropdownSection({name, icon, isCollapsable=true, form, valueChanged}) {
         }
       </div>
       {(!isCollapsed || !isCollapsable) &&
-        <DropdownForm form={form} valueChanged={valueChanged}/>
+        Children.map(children, child => {
+          return child;
+        })
       }
     </div>
   );

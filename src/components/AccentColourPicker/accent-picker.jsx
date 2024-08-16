@@ -4,6 +4,7 @@ import { mdiPalette, mdiArrowULeftTop, mdiEyedropperVariant } from '@mdi/js';
 
 import './accent-picker.scss';
 
+import DropdownSection from '../DropdownSection/dropdown-section.jsx';
 import AccentChanger from '../AccentChanger/accent-changer.jsx';
 
 const columns = [
@@ -75,35 +76,35 @@ function AccentColourPicker() {
   function customAccentPressed() {
     if (!hiddenPickerReference.current) return;
     const hiddenPicker = hiddenPickerReference.current;
+
+    // Could not get useEffect to trigger when UI was actually
+    // being shown meaning the reference was null on first show 
+    hiddenPicker.addEventListener('input', colourPickerUsed);
+    
     hiddenPicker.click();
   }
 
   function colourPickerUsed(event) {
-    console.log(event.target.value);
     let rgbValue = hexToRGB(event.target.value);
     document.documentElement.style.setProperty("--accent-colour", rgbValue);
     changeTextColour(rgbValue);
     setSelectedID(null);
-    // console.log(event.target.value);
   }
 
   useEffect(() => {
     if (!hiddenPickerReference.current) return;
     const hiddenPicker = hiddenPickerReference.current;
-    
-    hiddenPicker.addEventListener('input', colourPickerUsed)
+
+    hiddenPicker.addEventListener('input', colourPickerUsed);
 
     // If element gets deleted then remove event listener
     return () => {
       hiddenPicker.removeEventListener('input', colourPickerUsed);
     }
-  },[]);
+  });
 
   return (
-    <div className="accent-picker-container">
-      <div className="dropdown-header">
-        <span className='dropdown-name'><Icon path={mdiPalette} size={'30px'}/> Accent Colour</span>
-      </div>
+    <DropdownSection name={"Accent Colour"} icon={mdiPalette}>
       <div style={{
         display: "flex",
         borderRadius: "6px",
@@ -118,6 +119,7 @@ function AccentColourPicker() {
               const colourID = `${columnIndex}${colourIndex}`;
               const isSelected = colourID === selectedID;
               return <AccentChanger
+                key={colourID}
                 colour={colour}
                 isSelected={isSelected}
                 colourID={colourID}
@@ -149,7 +151,7 @@ function AccentColourPicker() {
           }}
         />
       </div>
-    </div>
+    </DropdownSection>
   )
 }
 

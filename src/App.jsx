@@ -7,9 +7,10 @@ import CVPreview from './components/CVPreview/cv-preview.jsx';
 import AccentColourPicker from './components/AccentColourPicker/accent-picker.jsx';
 
 import { mdiAccountTie, mdiSchool, mdiBriefcase } from '@mdi/js';
+import DropdownForm from './components/DropdownForm/dropdown-form.jsx';
 
-const templateData = [
-  {
+const templateData = {
+  "personalDetails": {
     "name": "personalDetails",
     "items": [
       {
@@ -38,35 +39,41 @@ const templateData = [
       }
     ],
   }
-];
+};
+
+for (const formName in templateData) {
+  templateData[formName].items.forEach(item => {
+    item.value = item.example;
+  });
+}
 
 function App() {
   const [CVData, setCVData] = useState(templateData);
 
   function itemValueChanged(formName, formItemName, newValue) {
     setCVData(prevState => {
-      return prevState.map((form) => {
-        if (form.name !== formName) return form;
-        return {
-          ...form,
-          items: form.items.map((item) => {
+      return {
+        ...prevState,
+        [formName]: {
+          ...prevState[formName],
+          items: prevState[formName].items.map(item => {
             if (item.name !== formItemName) return item;
             return { ...item, value: newValue };
           })
-        };
-      });
+        }
+      };
     });
   }
 
   return (
     <div className="app-wrapper">
       <div className="app-container">
-        <div className="cv-details-input">
-          <DropdownSection
+        <div className="cv-details-input-container">
+          <DropdownForm
             name="Personal Details"
             icon={mdiAccountTie}
             isCollapsable={false}
-            form={templateData[0]}
+            form={CVData["personalDetails"]}
             valueChanged={itemValueChanged}
           />
           <AccentColourPicker/>

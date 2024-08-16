@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
+import Icon from '@mdi/react';
+import { mdiMapMarker, mdiEmail, mdiPhone } from '@mdi/js';
+
 import './cv-preview.scss';
 
 function CVPreview({ CVData }) {
@@ -35,10 +38,30 @@ function CVPreview({ CVData }) {
       transformOrigin: `center center`
     }}>
       <div className="cv-header">
-        {CVData[0].items[0].value}
-      {CVData[0].items.map(item => {
+        <div className="fullName-container"><span>{CVData["personalDetails"].items[0].value}</span></div>
+        <div className="cv-header-items-container">
+          {CVData["personalDetails"].items[1].value &&
+            <div className="cv-header-item">
+              <Icon path={mdiMapMarker} size={"20px"}/>
+              {CVData["personalDetails"].items[1].value}
+            </div>
+          }
+          {CVData["personalDetails"].items[2].value &&
+            <div className="cv-header-item">
+              <Icon path={mdiEmail} size={"20px"}/>
+              {CVData["personalDetails"].items[2].value}
+            </div>
+          }
+          {CVData["personalDetails"].items[3].value &&
+            <div className="cv-header-item">
+              <Icon path={mdiPhone} size={"20px"}/>
+              {CVData["personalDetails"].items[3].value}
+            </div>
+          }
+        </div>
+      {/* {CVData["personalDetails"].items.map(item => {
         return <div>{item.name}: {item.value}</div>
-      })}
+      })} */}
       </div>
     </div> 
   )

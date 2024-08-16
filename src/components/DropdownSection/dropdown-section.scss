@@ -4,6 +4,7 @@
   // border: 2px solid lightgray;
   // box-shadow: 2px 2px 5px lightgray;
   height: auto;
+  padding: 5px;
 }
 
 .dropdown-header {
@@ -15,10 +16,8 @@
   grid-template-rows: 30px;
 }
 
-.collapsable-container {
-  &:hover {
-    cursor: pointer;
-  }
+.clickable-header:hover {
+  cursor: pointer;
 }
 
 .dropdown-name {
