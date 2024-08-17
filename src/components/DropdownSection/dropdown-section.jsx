@@ -7,7 +7,7 @@ import { mdiMenuDown, mdiMenuUp } from '@mdi/js';
 
 import DropdownForm from '../DropdownForm/dropdown-form.jsx';
 
-function DropdownSection({name, icon, isCollapsable=true, children}) {
+function DropdownSection({name, icon, isCollapsable=true, hasHeader=true, children}) {
   const [isCollapsed, setCollapsed] = useState(true);
 
   function menuClicked() {
@@ -17,14 +17,16 @@ function DropdownSection({name, icon, isCollapsable=true, children}) {
 
   return (
     <div className={"dropdown-container"}>
-      <div className={"dropdown-header " + (isCollapsable ? 'clickable-header' : '')} onClick={menuClicked}>
-        <span className='dropdown-name'><Icon path={icon} size={'30px'}/> {name}</span>
-        {isCollapsable &&
-          <Icon className="dropdown-menu-icon" path={
-            isCollapsed ? mdiMenuDown : mdiMenuUp
-          } size={'30px'}/>
-        }
-      </div>
+      {hasHeader &&
+        <div className={"dropdown-header " + (isCollapsable ? 'clickable-header' : '')} onClick={menuClicked}>
+          <span className='dropdown-name'><Icon path={icon} size={'30px'}/> {name}</span>
+          {isCollapsable &&
+            <Icon className="dropdown-menu-icon" path={
+              isCollapsed ? mdiMenuDown : mdiMenuUp
+            } size={'30px'}/>
+          }
+        </div>
+      }
       {(!isCollapsed || !isCollapsable) &&
         Children.map(children, child => {
           return child;

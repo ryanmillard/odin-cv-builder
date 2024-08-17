@@ -32,10 +32,21 @@
   user-select: none;
 }
 
-.dropdown-menu-icon {
-  // background-color: blue;
+.dropdown-options-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  height: 40px;
+  gap: 5px;
 }
 
-.dropdown-form {
-  
+.dropdown-options-btn {
+  border: 1px solid lightgray;
+  // color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 1rem;
+  border-radius: 6px;
 }

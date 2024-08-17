@@ -1,11 +1,15 @@
 import { useRef, useState, useEffect } from 'react';
 import Icon from '@mdi/react';
-import { mdiPalette, mdiArrowULeftTop, mdiEyedropperVariant } from '@mdi/js';
+import {
+  mdiPalette,
+  mdiArrowULeftTop,
+  mdiEyedropperVariant,
+  mdiCheckBold
+} from '@mdi/js';
 
 import './accent-picker.scss';
 
 import DropdownSection from '../DropdownSection/dropdown-section.jsx';
-import AccentChanger from '../AccentChanger/accent-changer.jsx';
 
 const columns = [
   ['rgb(105,105,105)', 'rgb(52,57,62)', 'rgb(27,29,30)'],
@@ -51,6 +55,16 @@ function hexToRGB(hexValue) {
   let g = parseInt(hex.substring(2,4), 16);
   let b = parseInt(hex.substring(4,6), 16);
   return `rgb(${r},${g},${b})`;
+}
+
+function AccentChanger({ colour, isSelected, colourID, changeColour }) {  
+  return (
+    <div
+      className="accent-changer"
+      style={{backgroundColor: colour}}
+      onClick={() => changeColour(colourID)}
+    >{isSelected && <Icon path={mdiCheckBold} size={"25px"} color={"#fff"}/>}</div>
+  )
 }
 
 function AccentColourPicker() {
@@ -108,7 +122,8 @@ function AccentColourPicker() {
       <div style={{
         display: "flex",
         borderRadius: "6px",
-        overflow: "hidden"
+        overflow: "hidden",
+        marginBottom: "5px"
       }}>
         {columns.map((column, columnIndex) => {
           return <div style={{
@@ -129,14 +144,14 @@ function AccentColourPicker() {
           </div>
         })}
       </div>
-      <div className="accent-options-container">
+      <div className="dropdown-options-container">
         <button 
-          className="accent-options-btn"
+          className="dropdown-options-btn"
           style={{backgroundColor: ""}}
           onClick={() => resetBtnClicked()}
         ><Icon path={mdiArrowULeftTop} size={"20px"}/>Reset Accent</button>
         <button
-          className="accent-options-btn"
+          className="dropdown-options-btn"
           onClick={() => customAccentPressed()}
         ><Icon path={mdiEyedropperVariant} size={"20px"}/>Custom Accent</button>
         {/* Hidden input so it can be used to prompt

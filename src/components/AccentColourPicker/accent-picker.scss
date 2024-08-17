@@ -1,19 +1,8 @@
-.accent-options-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
+.accent-changer {
+  width: 40px;
   height: 40px;
-  gap: 5px;
-  margin-top: 5px;
-}
 
-.accent-options-btn {
-  border: none;
-  // color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  font-size: 1rem;
-  border-radius: 6px;
 }

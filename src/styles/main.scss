@@ -6,7 +6,8 @@
 
 body {
   margin: 0;
-  background-color: rgb(43,43,43);
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 .app-wrapper {
@@ -15,6 +16,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgb(43,43,43);
 }
 
 .app-container {
@@ -47,4 +49,14 @@ body {
   align-items: center;
   justify-content: center;
   background-color: rgb(56,56,56);
+}
+
+.hidden-cv-container {
+  margin: 0;
+  width: 21cm;
+  height: 29.7cm;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1000;
 }
