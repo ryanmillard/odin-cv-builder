@@ -1,7 +1,7 @@
 import { useState } from "react";
 import './form-item.scss';
 
-function FormItem({ formName, itemName, placeholder="", value, valueChanged}) {
+function FormItem({ formName, sectionIndex, itemName, itemID, placeholder="", value, valueChanged}) {
   let camelCaseName = itemName.split(' ');
   camelCaseName[0] = camelCaseName[0].toLowerCase();
   camelCaseName = camelCaseName.join('');
@@ -12,12 +12,12 @@ function FormItem({ formName, itemName, placeholder="", value, valueChanged}) {
       <input
         className="formItemInput"
         type="text"
-        id={camelCaseName}
+        id={itemID}
         name={camelCaseName}
         placeholder={placeholder}
         autoComplete="off"
         value={value}
-        onChange={(e) => valueChanged(formName, itemName, e.target.value)}
+        onChange={(e) => valueChanged(formName, sectionIndex, itemName, e.target.value)}
       ></input>
     </div>
   )

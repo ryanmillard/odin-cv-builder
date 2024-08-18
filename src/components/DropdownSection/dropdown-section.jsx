@@ -1,11 +1,8 @@
-import { Children, useState, useCallback } from "react";
-
 import './dropdown-section.scss';
 
+import { Children, useState } from "react";
 import Icon from '@mdi/react';
 import { mdiMenuDown, mdiMenuUp } from '@mdi/js';
-
-import DropdownForm from '../DropdownForm/dropdown-form.jsx';
 
 function DropdownSection({name, icon, isCollapsable=true, hasHeader=true, children}) {
   const [isCollapsed, setCollapsed] = useState(true);

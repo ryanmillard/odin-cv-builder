@@ -6,3 +6,19 @@
   align-items: center;
   justify-content: center;
 }
+
+.current-colour {
+  background-color: var(--accent-colour);
+  color: var(--accent-text-colour);
+
+  width: 100%;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

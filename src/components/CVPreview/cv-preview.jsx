@@ -3,8 +3,12 @@ import Icon from '@mdi/react';
 import { mdiMapMarker, mdiEmail, mdiPhone } from '@mdi/js';
 
 import './cv-preview.scss';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+
+function CVSubheader({ title }) {
+  return (
+    <div className="cv-subheader">{title}</div>
+  )
+}
 
 function CVPreview({ CVData, isHidden=false }) {
   const [scale, setScale] = useState(1); // CSS Transform Scale
@@ -16,10 +20,11 @@ function CVPreview({ CVData, isHidden=false }) {
 
     let container = containerReference.current;
     let parent = container.parentElement;
+    let padding = 20; // In pixels
 
     // Find smallest scale needed so it fits both height and width
-    let heightScale = (parent.offsetHeight - 20) / container.offsetHeight;
-    let widthScale = (parent.offsetWidth - 20) / container.offsetWidth;
+    let heightScale = (parent.offsetHeight - padding) / container.offsetHeight;
+    let widthScale = (parent.offsetWidth - padding) / container.offsetWidth;
     let newScale = Math.min(heightScale, widthScale);
 
     setScale(newScale);
@@ -48,24 +53,24 @@ function CVPreview({ CVData, isHidden=false }) {
         }
       }>
       <div className="cv-header" onClick={() => generatePDF()}>
-        <div className="fullName-container"><span>{CVData["personalDetails"].items[0].value}</span></div>
+        <div className="fullName-container"><span>{CVData["personalDetails"].items[0][0].value}</span></div>
         <div className="cv-header-items-container">
-          {CVData["personalDetails"].items[1].value &&
+          {CVData["personalDetails"].items[0][1].value &&
             <div className="cv-header-item">
               <Icon path={mdiMapMarker} size={"20px"}/>
-              {CVData["personalDetails"].items[1].value}
+              {CVData["personalDetails"].items[0][1].value}
             </div>
           }
-          {CVData["personalDetails"].items[2].value &&
+          {CVData["personalDetails"].items[0][2].value &&
             <div className="cv-header-item">
               <Icon path={mdiEmail} size={"20px"}/>
-              {CVData["personalDetails"].items[2].value}
+              {CVData["personalDetails"].items[0][2].value}
             </div>
           }
-          {CVData["personalDetails"].items[3].value &&
+          {CVData["personalDetails"].items[0][3].value &&
             <div className="cv-header-item">
               <Icon path={mdiPhone} size={"20px"}/>
-              {CVData["personalDetails"].items[3].value}
+              {CVData["personalDetails"].items[0][3].value}
             </div>
           }
         </div>
@@ -73,6 +78,7 @@ function CVPreview({ CVData, isHidden=false }) {
         return <div>{item.name}: {item.value}</div>
       })} */}
       </div>
+      <CVSubheader title={"Education"}/>
     </div> 
   )
 }

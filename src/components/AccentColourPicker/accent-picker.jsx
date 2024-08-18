@@ -42,12 +42,6 @@ function getRGBValues(cssRGBValue) {
   return values.map((value) => Number(value));
 }
 
-function changeTextColour(cssRGBValue) {
-  let rgb = getRGBValues(cssRGBValue);
-  let textColour = isBlackOrWhiteTextNeeded(rgb[0],rgb[1],rgb[2]);
-  document.documentElement.style.setProperty("--accent-text-colour", textColour);
-}
-
 function hexToRGB(hexValue) {
   let regex = /[a-f0-9]{6}/i;
   let hex = hexValue.match(regex)[0];
@@ -69,21 +63,35 @@ function AccentChanger({ colour, isSelected, colourID, changeColour }) {
 
 function AccentColourPicker() {
   const [selectedID, setSelectedID] = useState(null);
+  const [
+    accentColourCSSValue,
+    setAccentColourCSSValue
+  ] = useState("rgb(87,109,123)");
+  
+  const currentColourReference = useRef(null);
   const hiddenPickerReference = useRef(null);
 
-  function changeColour(colourID) {
-    const x = colourID[0];
-    const y = colourID[1];
-    const colour = columns[x][y];
-    document.documentElement.style.setProperty("--accent-colour", colour);
-    changeTextColour(colour);
+  function changeAccentColour(cssRGBValue) {
+    let rgb = getRGBValues(cssRGBValue);
+    let textColour = isBlackOrWhiteTextNeeded(rgb[0],rgb[1],rgb[2]);
+
+    document.documentElement.style.setProperty("--accent-colour", cssRGBValue);
+    document.documentElement.style.setProperty("--accent-text-colour", textColour);
+    setAccentColourCSSValue(cssRGBValue);
+  }
+
+  function changeColourPressed(colourID) {
+    changeAccentColour(columns[colourID[0]][colourID[1]]);
     setSelectedID(colourID);
   }
 
   function resetBtnClicked() {
-    const defaultColour = "rgb(87,109,123)";
-    document.documentElement.style.setProperty("--accent-colour", defaultColour);
-    changeTextColour(defaultColour);
+    changeAccentColour("rgb(87,109,123)");
+    setSelectedID(null);
+  }
+
+  function colourPickerUsed(event) {
+    changeAccentColour(hexToRGB(event.target.value));
     setSelectedID(null);
   }
 
@@ -96,13 +104,6 @@ function AccentColourPicker() {
     hiddenPicker.addEventListener('input', colourPickerUsed);
     
     hiddenPicker.click();
-  }
-
-  function colourPickerUsed(event) {
-    let rgbValue = hexToRGB(event.target.value);
-    document.documentElement.style.setProperty("--accent-colour", rgbValue);
-    changeTextColour(rgbValue);
-    setSelectedID(null);
   }
 
   useEffect(() => {
@@ -119,6 +120,9 @@ function AccentColourPicker() {
 
   return (
     <DropdownSection name={"Accent Colour"} icon={mdiPalette}>
+      <div className="current-colour" ref={currentColourReference}>
+        Selected Colour: {accentColourCSSValue}
+      </div>
       <div style={{
         display: "flex",
         borderRadius: "6px",
@@ -138,7 +142,7 @@ function AccentColourPicker() {
                 colour={colour}
                 isSelected={isSelected}
                 colourID={colourID}
-                changeColour={changeColour}
+                changeColour={changeColourPressed}
               />
             })}
           </div>

@@ -16,38 +16,77 @@ import { mdiAccountTie, mdiSchool, mdiBriefcase } from '@mdi/js';
 const templateData = {
   "personalDetails": {
     "name": "personalDetails",
-    "items": [
+    "items": [[
       {
+        "id": "fullName",
         "name": "Full Name",
         "example": "John Smith",
         "placeholder": "Enter full name",
         "value": ""
       },
       {
+        "id": "address",
         "name": "Address",
         "example": "Northamptonshire, UK",
         "placeholder": "Enter your address",
         "value": ""
       },
       {
+        "id": "email",
         "name": "Email",
         "example": "john.smith@email.com",
         "placeholder": "Enter your email",
         "value": ""
       },
       {
+        "id": "phoneNumber",
         "name": "Phone Number",
         "example": "+44 07124 457625",
         "placeholder": "Enter your phone number",
         "value": ""
       }
-    ],
+    ]],
+  },
+  "education": {
+    "name": "education",
+    "items": [[
+      {
+        "id": "school",
+        "name": "School/University/Organisation",
+        "example": "University of Cambridge",
+        "placeholder": "Enter place of study",
+        "value": ""
+      },
+      {
+        "id": "qualification",
+        "name": "Program/Qualification/Course",
+        "example": "BSc Computer Science",
+        "placeholder": "Enter your qualification",
+        "value": ""
+      },
+      {
+        "id": "startDate",
+        "name": "Start Date",
+        "example": "September 2012",
+        "placeholder": "Enter the start date",
+        "value": ""
+      },
+      {
+        "id": "endDate",
+        "name": "End Date",
+        "example": "July 2016",
+        "placeholder": "Enter the end date",
+        "value": ""
+      }
+    ]],
   }
 };
 
 for (const formName in templateData) {
-  templateData[formName].items.forEach(item => {
-    item.value = item.example;
+  templateData[formName].items.forEach(formData => {
+    formData.forEach(item => {
+      item.value = item.example;
+    })
   });
 }
 
@@ -57,15 +96,19 @@ function App() {
   const [pdfUrl, setPdfUrl] = useState(null);
   const hiddenCVReference = useRef(null);
 
-  function itemValueChanged(formName, formItemName, newValue) {
+  function itemValueChanged(formName, formIndex, formItemName, newValue) {
     setCVData(prevState => {
       return {
         ...prevState,
         [formName]: {
           ...prevState[formName],
-          items: prevState[formName].items.map(item => {
-            if (item.name !== formItemName) return item;
-            return { ...item, value: newValue };
+          items: prevState[formName].items.map((section, sectionIndex) => {
+            if (sectionIndex !== formIndex) return section;
+
+            return section.map(item => {
+              if (item.name !== formItemName) return item;
+              return { ...item, value: newValue };
+            })
           })
         }
       };
@@ -80,8 +123,10 @@ function App() {
             formName,
             {
               ...formData,
-              items: formData.items.map(item => {
-                return { ...item, value: item.example };
+              items: formData.items.map(section => {
+                return section.map(item => {
+                  return { ...item, value: item.example };
+                })
               })
             }
           ]
@@ -98,8 +143,10 @@ function App() {
             formName,
             {
               ...formData,
-              items: formData.items.map(item => {
-                return { ...item, value: '' };
+              items: formData.items.map(formSection => {
+                return formSection.map(item => {
+                  return { ...item, value: '' };
+                })
               })
             }
           ]
@@ -161,6 +208,15 @@ function App() {
               icon={mdiAccountTie}
               isCollapsable={false}
               form={CVData["personalDetails"]}
+              allowMultipleForms={false}
+              valueChanged={itemValueChanged}
+            />
+            <DropdownForm
+              name="Education"
+              icon={mdiSchool}
+              isCollapsable={true}
+              form={CVData["education"]}
+              allowMultipleForms={true}
               valueChanged={itemValueChanged}
             />
             <AccentColourPicker/>
@@ -182,21 +238,32 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="hidden-cv-container" ref={hiddenCVReference}>
-        <CVPreview CVData={CVData} isHidden={true}/>
-      </div>
+      {/*
+        Hidden CV necessary because the other CV Preview is effected
+        by scale, so when the user goes to print or download the CV,
+        the scale will still be used making the image quality worse.
+
+        To avoid this, a copy of the CV with the right A4 size is
+        hidden behind the rest of the UI. It cannot be display:none
+        because otherwise html2canvas won't work. However, the user
+        cannot see it anyway.
+
+        The iframe is also hidden and only rendered when needed
+        because the PDF cannot be prompted to be printed unless
+        it is inside of an iframe.
+      */}
+      <div 
+        className="hidden-cv-container"
+        ref={hiddenCVReference}
+        aria-hidden={true}
+      ><CVPreview CVData={CVData} isHidden={true}/></div>
       {isPrinting &&
         <iframe
+          className="hidden-iframe"
           id="iframePDF"
           src={pdfUrl}
-          style={{
-            width: "100%",
-            height: "0px",
-            border: "none",
-            zIndex: "-1000"
-          }}
+          aria-hidden={true}
           onLoad={handleIframeLoad}
-          title="CV PDF Preview"
         ></iframe>
       }
     </>
