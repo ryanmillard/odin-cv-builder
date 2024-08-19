@@ -69,3 +69,37 @@ body {
   border: none;
   z-index: -1000;
 }
+
+@mixin standard-btn($btn-colour, $text-colour) {
+  border: none;
+  background-color: $btn-colour;
+  border-radius: 6px;
+  
+  color: $text-colour;
+  font-size: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  
+  &:hover {
+    cursor: pointer;
+    background-color: darken($btn-colour, 10%);
+  }
+  
+  &:active {
+    background-color: darken($btn-colour, 5%);
+  }
+}
+
+.primary-btn {
+  $btn-colour: rgb(220, 220, 220);
+  @include standard-btn($btn-colour, black);
+}
+
+.negative-btn {
+  $btn-colour: rgb(200, 64, 64);
+  @include standard-btn($btn-colour, white);
+}

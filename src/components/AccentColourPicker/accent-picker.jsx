@@ -77,6 +77,10 @@ function AccentColourPicker() {
 
     document.documentElement.style.setProperty("--accent-colour", cssRGBValue);
     document.documentElement.style.setProperty("--accent-text-colour", textColour);
+    document.documentElement.style.setProperty(
+      "--accent-heading-colour",
+      textColour === 'white' ? 'whitesmoke' : 'rgb(36,31,49)'
+    )
     setAccentColourCSSValue(cssRGBValue);
   }
 
@@ -150,12 +154,11 @@ function AccentColourPicker() {
       </div>
       <div className="dropdown-options-container">
         <button 
-          className="dropdown-options-btn"
-          style={{backgroundColor: ""}}
+          className="negative-btn"
           onClick={() => resetBtnClicked()}
         ><Icon path={mdiArrowULeftTop} size={"20px"}/>Reset Accent</button>
         <button
-          className="dropdown-options-btn"
+          className="primary-btn"
           onClick={() => customAccentPressed()}
         ><Icon path={mdiEyedropperVariant} size={"20px"}/>Custom Accent</button>
         {/* Hidden input so it can be used to prompt

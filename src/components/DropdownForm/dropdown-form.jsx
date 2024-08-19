@@ -5,14 +5,14 @@ import FormItem from '../FormItem/form-item.jsx';
 import { useState } from 'react';
 
 import Icon from '@mdi/react';
-import { mdiPlus, mdiArrowLeft } from '@mdi/js';
+import { mdiPlus, mdiDelete } from '@mdi/js';
 
 function FormSectionButton({ formSection, sectionIndex, buttonPressed }) {
   let name = formSection[0].value === '' ? 'Unnamed' : formSection[0].value;
   return (
     <>
       <button
-        className="form-section-btn"
+        className="primary-btn form-section-btn"
         onClick={() => buttonPressed(sectionIndex)}
       >{name}</button>
     </>
@@ -25,7 +25,9 @@ function DropdownForm({
   isCollapsable=true,
   form,
   allowMultipleForms=false,
-  valueChanged
+  valueChanged,
+  createSection,
+  deleteSection
 }) {
   const [currentFormSection, setCurrentFormSection] = useState(0);
   const [isSectionBeingShown, setIsSectionBeingShown] = useState(false);
@@ -61,10 +63,19 @@ function DropdownForm({
           })}
           {allowMultipleForms &&
             <div className="form-btn-container">
+              {form.items.length !== 1 &&
+                <button
+                  className="negative-btn form-btn"
+                  onClick={() => {
+                    backToSectionMenu();
+                    deleteSection(form.name, currentFormSection);
+                  }}
+                ><Icon path={mdiDelete} size={'20px'}/>Delete</button>
+              }
               <button
-                className="form-btn"
+                className="primary-btn form-btn"
                 onClick={backToSectionMenu}
-              ><Icon path={mdiArrowLeft} size={'20px'}/>Back</button>
+              >Back</button>
             </div>
           }
         </div>
@@ -78,8 +89,11 @@ function DropdownForm({
             />
           })}
           <div className="form-btn-container">
-            <button className="form-btn">
-              <Icon path={mdiPlus} size={'20px'}/>{`New ${form.name}`}
+            <button
+              className="primary-btn form-btn"
+              onClick={() => createSection(form.name)}
+            >
+              <Icon path={mdiPlus} size={'20px'}/>{name}
             </button>
           </div>
         </div>

@@ -57,7 +57,7 @@
   @include flex-center;
   width: 100%;
   text-align: center;
-  background-color: whitesmoke;
+  background-color: var(--accent-heading-colour);
   color: var(--accent-colour);
   font-size: 1.3rem;
   font-weight: bold;

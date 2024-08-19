@@ -79,6 +79,16 @@ function CVPreview({ CVData, isHidden=false }) {
       })} */}
       </div>
       <CVSubheader title={"Education"}/>
+      {CVData["education"].items.filter((sectionData) => sectionData[0].value !== '').map((sectionData) => {
+        return (
+          <div>
+            <div>{sectionData[0].value}</div>
+            <div>{sectionData[1].value}</div>
+            <div>{sectionData[2].value} - {sectionData[3].value}</div>
+          </div>
+        )
+      })}
+      <CVSubheader title={"Work Experience"}/>
     </div> 
   )
 }

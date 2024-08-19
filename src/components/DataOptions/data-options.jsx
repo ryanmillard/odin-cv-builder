@@ -8,12 +8,11 @@ function DataOptions({ deleteCVClicked, loadTemplateClicked }) {
     <DropdownSection isCollapsable={false} hasHeader={false}>
       <div className="dropdown-options-container">
         <button 
-          className="dropdown-options-btn"
-          style={{color: "#bf2121"}}
+          className="negative-btn dropdown-options-btn"
           onClick={deleteCVClicked}
         ><Icon path={mdiDelete} size={"20px"}/>Delete CV</button>
         <button
-          className="dropdown-options-btn"
+          className="primary-btn dropdown-options-btn"
           onClick={loadTemplateClicked}
         >Load Template</button>
       </div>

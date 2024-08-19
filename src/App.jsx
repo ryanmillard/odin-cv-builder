@@ -16,6 +16,7 @@ import { mdiAccountTie, mdiSchool, mdiBriefcase } from '@mdi/js';
 const templateData = {
   "personalDetails": {
     "name": "personalDetails",
+    "multipleForms": false,
     "items": [[
       {
         "id": "fullName",
@@ -49,6 +50,7 @@ const templateData = {
   },
   "education": {
     "name": "education",
+    "multipleForms": true,
     "items": [[
       {
         "id": "school",
@@ -123,7 +125,7 @@ function App() {
             formName,
             {
               ...formData,
-              items: formData.items.map(section => {
+              items: formData.items.filter((_, i) => i === 0).map(section => {
                 return section.map(item => {
                   return { ...item, value: item.example };
                 })
@@ -143,7 +145,7 @@ function App() {
             formName,
             {
               ...formData,
-              items: formData.items.map(formSection => {
+              items: formData.items.filter((_, i) => i === 0).map((formSection) => {
                 return formSection.map(item => {
                   return { ...item, value: '' };
                 })
@@ -152,6 +154,44 @@ function App() {
           ]
         })
       )
+    });
+  }
+
+  function createSection(formName) {
+    if (CVData[formName].items.length === 0) return;
+
+    let newSectionIndex = CVData[formName].items.length;
+    let formSections = CVData[formName].items;
+    formSections[newSectionIndex] = formSections[0].map(item => {
+      return { ...item, value: '' }
+    });
+
+    setCVData(prevState => {
+      return {
+        ...prevState,
+        [formName]: {
+          ...prevState[formName],
+          items: formSections
+        }
+      };
+    });
+  }
+
+  function deleteSection(formName, sectionIndex) {
+    if (CVData[formName].items.length === 1) return;
+
+    let formSections = CVData[formName].items.filter((_, index) => {
+      return index !== sectionIndex;
+    });
+
+    setCVData(prevState => {
+      return {
+        ...prevState,
+        [formName]: {
+          ...prevState[formName],
+          items: formSections
+        }
+      };
     });
   }
 
@@ -218,6 +258,8 @@ function App() {
               form={CVData["education"]}
               allowMultipleForms={true}
               valueChanged={itemValueChanged}
+              createSection={createSection}
+              deleteSection={deleteSection}
             />
             <AccentColourPicker/>
             {/* <DropdownSection
