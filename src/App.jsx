@@ -55,7 +55,7 @@ const templateData = {
       {
         "id": "school",
         "name": "School/University/Organisation",
-        "example": "University of Cambridge",
+        "example": "University College London",
         "placeholder": "Enter place of study",
         "value": ""
       },
@@ -67,16 +67,64 @@ const templateData = {
         "value": ""
       },
       {
+        "id": "description",
+        "name": "Course Description",
+        "example": "Fames mi amet lacus dapibus lobortis. Conubia iaculis semper amet semper; nulla leo amet nec. Proin nostra ex auctor euismod lacinia pretium aptent. Facilisi sed imperdiet maecenas fusce nisi semper montes. Ultrices nunc interdum nascetur mattis donec leo.",
+        "placeholder": "Enter course description",
+        "value": ""
+      },
+      {
         "id": "startDate",
         "name": "Start Date",
-        "example": "September 2012",
+        "example": "September 2018",
         "placeholder": "Enter the start date",
         "value": ""
       },
       {
         "id": "endDate",
         "name": "End Date",
-        "example": "July 2016",
+        "example": "July 2022",
+        "placeholder": "Enter the end date",
+        "value": ""
+      }
+    ]],
+  },
+  "experience": {
+    "name": "experience",
+    "multipleForms": true,
+    "items": [[
+      {
+        "id": "company",
+        "name": "Company",
+        "example": "Hammond Robotics",
+        "placeholder": "Enter company name",
+        "value": ""
+      },
+      {
+        "id": "jobTitle",
+        "name": "Job Title",
+        "example": "Junior Robotics Engineer",
+        "placeholder": "Enter your job title",
+        "value": ""
+      },
+      {
+        "id": "jobDescription",
+        "name": "Responsibilities",
+        "example": "Placerat dignissim hac convallis sed quisque tincidunt. Primis orci ridiculus dis senectus blandit purus; sollicitudin dolor fringilla. Curabitur elementum dictumst potenti nisi ligula imperdiet consequat. Ultricies consectetur urna nisl habitasse suscipit fames. Tristique commodo orci dapibus montes porta conubia sociosqu felis. Euismod ornare suspendisse pellentesque mauris porttitor tortor.",
+        "placeholder": "Enter job description",
+        "value": ""
+      },
+      {
+        "id": "jobStartDate",
+        "name": "Start Date",
+        "example": "September 2022",
+        "placeholder": "Enter the start date",
+        "value": ""
+      },
+      {
+        "id": "jobEndDate",
+        "name": "End Date",
+        "example": "Current",
         "placeholder": "Enter the end date",
         "value": ""
       }
@@ -256,6 +304,16 @@ function App() {
               icon={mdiSchool}
               isCollapsable={true}
               form={CVData["education"]}
+              allowMultipleForms={true}
+              valueChanged={itemValueChanged}
+              createSection={createSection}
+              deleteSection={deleteSection}
+            />
+            <DropdownForm
+              name="Experience"
+              icon={mdiBriefcase}
+              isCollapsable={true}
+              form={CVData["experience"]}
               allowMultipleForms={true}
               valueChanged={itemValueChanged}
               createSection={createSection}

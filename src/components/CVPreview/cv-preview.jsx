@@ -81,14 +81,25 @@ function CVPreview({ CVData, isHidden=false }) {
       <CVSubheader title={"Education"}/>
       {CVData["education"].items.filter((sectionData) => sectionData[0].value !== '').map((sectionData) => {
         return (
-          <div>
-            <div>{sectionData[0].value}</div>
+          <div className="cv-entry">
+            <div className="cv-entry-title">{sectionData[0].value}</div>
             <div>{sectionData[1].value}</div>
-            <div>{sectionData[2].value} - {sectionData[3].value}</div>
+            <div className="cv-entry-description">{sectionData[2].value}</div>
+            <div className="cv-entry-date">{sectionData[3].value} - {sectionData[4].value}</div>
           </div>
         )
       })}
       <CVSubheader title={"Work Experience"}/>
+      {CVData["experience"].items.filter((sectionData) => sectionData[0].value !== '').map((sectionData) => {
+        return (
+          <div className="cv-entry">
+            <div className="cv-entry-title">{sectionData[0].value}</div>
+            <div>{sectionData[1].value}</div>
+            <div className="cv-entry-description">{sectionData[2].value}</div>
+            <div className="cv-entry-date">{sectionData[3].value} - {sectionData[4].value}</div>
+          </div>
+        )
+      })}
     </div> 
   )
 }

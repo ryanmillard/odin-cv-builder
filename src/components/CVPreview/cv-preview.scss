@@ -15,7 +15,7 @@
   aspect-ratio: 21/29.7;
 
   user-select: none;
-  padding: 10px;
+  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -63,4 +63,24 @@
   font-weight: bold;
   height: 1cm;
   margin: 10px 0px;
+}
+
+.cv-entry {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+}
+
+.cv-entry-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.cv-entry-description {
+  font-size: 0.85rem;
+}
+
+.cv-entry-date {
+  font-style: italic;
 }
